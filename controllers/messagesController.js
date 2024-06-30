@@ -22,8 +22,20 @@ export const getSingleChat = async (req, res, next) => {
 
 export const addChat = async (req, res, next) => {
     try {
-        const addMessage = await MessageModel.create(req.body);
-        res.status(200).json(addMessage);
+        const { conversationID, senderID, recipientID, content, status } = req.body;
+        if (!conversationID || !senderID || !recipientID || !content || !status) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+
+        const newMessage = await MessageModel.create({
+            conversationID,
+            senderID,
+            recipientID,
+            content,
+            status
+        });
+
+        res.status(201).json(newMessage);
     } catch (error) {
         next(error);
     }

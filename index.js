@@ -1,7 +1,6 @@
 import express from "express";
 import messageRouter from "./routes/messagesRouter.js";
 import { dbConnection } from "./config/db.js";
-import conversationRouter from "./routes/conversationRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 
 const app = express();
@@ -17,7 +16,6 @@ app.get("/", (req, res) => {
 
 // use routes
 app.use(messageRouter);
-app.use(conversationRouter);
 app.use(usersRouter);
 
 
