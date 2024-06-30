@@ -30,9 +30,17 @@ export const updateUser = async (req, res, next) => {
 
 export const addUser = async (req, res, next) => {
     try {
-        const addAnotherUser = await UsersModel.create(req.body);
-        res.json(addAnotherUser);
+        const { userName, profilePic, userStatus } = req.body;
+        if ( !userName || !profilePic ) {
+            return res.status(400).json({ message: "All fields required" });
+        }
+        const addNewUser = await UsersModel.create({
+            userName,
+            profilePic,
+            userStatus
+        });
+        res.status(201).json(addNewUser);
     } catch (error) {
-        
+        next(error);
     }
 }
